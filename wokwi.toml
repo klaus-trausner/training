@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = "./ESP32_GENERIC.bin"
+elf = "./ESP32_GENERIC.elf"
