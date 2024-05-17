@@ -5,7 +5,7 @@ import time
 #import network
 #import ntptime
 #import secret
-import esp32wlan
+#import esp32wlan
 import esp32display
 import mqtt
 
@@ -37,7 +37,7 @@ def writeMessures(temp, hum, pres):
   esp32display.oled.show()
 
 
-esp32wlan.wifi.do_connect()
+#esp32wlan.wifi.do_connect()
 
 mqttc = mqtt.mqttc
 mqttc.connect()
