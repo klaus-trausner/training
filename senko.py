@@ -19,7 +19,7 @@ class Senko:
             headers (list, optional): Headers for urequests.
         """
         self.base_url = "{}/{}/{}".format(self.raw, user, repo) if user else url.replace(self.github, self.raw)
-        self.url = url if url is not None else "{}/{}/{}".format(self.base_url, branch, working_dir)
+        self.url = url if url is not None else "{}/{}".format(self.base_url, branch)
         self.headers = headers
         self.files = files
 
@@ -38,6 +38,7 @@ class Senko:
     def _get_file(self, url):
         payload = urequests.get(url, headers=self.headers)
         code = payload.status_code
+        print("Code: ", code, payload.text)
 
         if code == 200:
             return payload.text
@@ -49,18 +50,21 @@ class Senko:
 
         for file in self.files:
             latest_version = self._get_file(self.url + "/" + file)
+            print("Latest Version", latest_version)
             if latest_version is None:
                 continue
 
             try:
                 with open(file, "r") as local_file:
                     local_version = local_file.read()
+                    print("Local Version: ", local_version)
             except:
                 local_version = ""
+                print("Exeption!")
 
             if not self._check_hash(latest_version, local_version):
                 changes.append(file)
-
+        print("Changes: ", changes)
         return changes
 
     def fetch(self):

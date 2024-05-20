@@ -5,7 +5,7 @@ import machine
 
 esp32wlan.wifi.do_connect()
 
-OTA = senko.Senko(user="klaus-trausner", repo="training", url="https://github.com/klaus-trausner/training", branch ="main", working_dir="", files=["testdatei.txt"])
+OTA = senko.Senko(user="klaus-trausner", repo="training",  branch ="main", working_dir="", files=["testdatei.txt","testdatei2.txt"])
 print("OTA Update: ", OTA.update())
 
 if OTA.update():
