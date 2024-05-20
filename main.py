@@ -44,7 +44,7 @@ mqttc = mqtt.mqttc
 mqttc.connect()
 mqttc.publish("test", "new mwssage from micropython...")
 
-
+print("Loop startet....")
 while True:
   temp, hum, pres = readMessures()
   writeMessures(temp,hum,pres)
