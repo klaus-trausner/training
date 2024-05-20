@@ -1,4 +1,4 @@
-from machine import Pin, I2C      
+from machine import Pin, SoftI2C      
 #from ssd1306 import SSD1306_I2C  
 import bme280
 import time
@@ -13,7 +13,8 @@ import mqtt
 
 
 
-i2c_bme280 = I2C(scl=Pin(22), sda=Pin(21), freq=10000)
+#i2c_bme280 = I2C(scl=Pin(22), sda=Pin(21), freq=10000)
+i2c_bme280 = SoftI2C(scl=Pin(22), sda=Pin(21), freq=10000)
 bme = bme280.BME280(i2c=i2c_bme280)
 
 
