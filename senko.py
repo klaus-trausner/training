@@ -38,7 +38,7 @@ class Senko:
     def _get_file(self, url):
         payload = urequests.get(url, headers=self.headers)
         code = payload.status_code
-        print("Code: ", code, payload.text)
+        #print("Code: ", code, payload.text)
 
         if code == 200:
             return payload.text
@@ -50,14 +50,14 @@ class Senko:
 
         for file in self.files:
             latest_version = self._get_file(self.url + "/" + file)
-            print("Latest Version", latest_version)
+            #print("Latest Version", latest_version)
             if latest_version is None:
                 continue
 
             try:
                 with open(file, "r") as local_file:
                     local_version = local_file.read()
-                    print("Local Version: ", local_version)
+                    #print("Local Version: ", local_version)
             except:
                 local_version = ""
                 print("Exeption!")
