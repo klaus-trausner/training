@@ -55,8 +55,9 @@ def publishSensors(t):
 mqttc = mqtt.mqttc
 mqttc.connect()
 mqttc.publish("test", "new mwssage from micropython...")
-mqttc.subscribe("test")
 mqttc.set_callback(sub_cb)
+mqttc.subscribe("test")
+
 
 
 timerSensors=Timer(period=10000, mode=Timer.PERIODIC, callback=publishSensors)
