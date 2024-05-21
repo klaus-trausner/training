@@ -1,4 +1,4 @@
-from machine import Pin, SoftI2C      
+from machine import Pin, SoftI2C, Timer      
 #from ssd1306 import SSD1306_I2C  
 import bme280
 import time
@@ -37,15 +37,13 @@ def writeMessures(temp, hum, pres):
   
   esp32display.oled.show()
 
-
+def sub_cb(topic, msg):
+  print((topic, msg))
 #esp32wlan.wifi.do_connect()
 
-mqttc = mqtt.mqttc
-mqttc.connect()
-mqttc.publish("test", "new mwssage from micropython...")
 
-print("Loop startet....")
-while True:
+  
+def publishSensors(t):
   temp, hum, pres = readMessures()
   writeMessures(temp,hum,pres)
   mqttc.publish("test", temp)
@@ -53,3 +51,20 @@ while True:
   mqttc.publish("test", pres)
   mqttc.publish("innen",temp+"-"+hum+"-"+pres)
   time.sleep(10)
+
+mqttc = mqtt.mqttc
+mqttc.connect()
+mqttc.publish("test", "new mwssage from micropython...")
+mqttc.subscribe("test")
+mqttc.set_callback(sub_cb)
+
+
+timerSensors=Timer(period=10000, mode=Timer.PERIODIC, callback=publishSensors)
+print("Loop startet....")
+while True:
+  try:
+    mqttc.check_msg()
+  except:
+    print("MQTT-Error")
+    pass
+  
